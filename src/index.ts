@@ -50,7 +50,7 @@ router.post("/", async (req: IncomingMessage, res: ServerResponse) => {
     // Ensure the message is not empty/undefined
     if (message) {
         // Censor the message if configured to do so
-        if (censor || profanityFilter.isProfane(message)) {
+        if (censor && profanityFilter.isProfane(message)) {
             // Block the request entirely if strict mode is enabled
             if (censorStrict) {
                 res.statusCode = 400;
