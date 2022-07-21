@@ -27,8 +27,8 @@ router.post("/", async (req: IncomingMessage, res: ServerResponse) => {
     // Use the body parser to get the body of a request
     const body = await useBody(req);
 
-    // Ensure the message is a string
-    let message = body.message.toString();
+    // Get the message
+    let message = body.message;
 
     // Get the IP address of the client
     const address = req.socket.remoteAddress === "::1" ? req.headers["x-forwarded-for"] : req.socket.remoteAddress;
