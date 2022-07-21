@@ -34,6 +34,7 @@ router.post("/", async (req: IncomingMessage, res: ServerResponse) => {
     const address = req.socket.remoteAddress === "::1" ? req.headers["x-forwarded-for"] : req.socket.remoteAddress;
 
     // Crappy rate limiting
+    // TODO: Make rate limiting configurable
     if (requests.has(address)) {
         const limitedSince = requests.get(address);
 
