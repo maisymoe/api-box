@@ -14,8 +14,8 @@ app.use(router);
 // Configuration, see the README
 const port: number = parseInt(process.env.AB_PORT as string) || parseInt(process.argv[2] as string) || 3000;
 const charLimit: number = parseInt(process.env.AB_CHAR_LIMIT as string) || parseInt(process.argv[3] as string) || 500;
-const censor: boolean = Boolean(process.env.AB_CENSOR) || Boolean(process.argv[4]) || true;
-const censorStrict: boolean = Boolean(process.env.AB_CENSOR_STRICT) || Boolean(process.argv[5]) || false;
+const censor: boolean = ((process.env.AB_CENSOR === "true") || (process.argv[4] === "true")) ? true : false;
+const censorStrict: boolean = ((process.env.AB_CENSOR_STRICT === "true") || (process.argv[5] === "true")) ? true : false;
 
 // Instantiate a map for rate limiting
 const requests = new Map();
@@ -87,5 +87,5 @@ router.get("/", async (req: IncomingMessage, res: ServerResponse) => {
 
 // Listen on the configured port
 createServer(app).listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}, with a character limit of ${charLimit} characters. The profanity filter is ${censor ? "enabled" : `disabled`}${censorStrict ? ", and it is in strict mode." : "."}`);
 });
